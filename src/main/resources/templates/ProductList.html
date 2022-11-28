@@ -5,23 +5,77 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width" />
     <title>Produtos</title>
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-          rel="stylesheet"/>
-    <link th:href="@{/webjars/bootstrap/css/bootstrap-theme.min.css}"
-          rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 </head>
 <body>
+
+<nav class="navbar navbar-inverse" style="display:inline-flex">
+    <div class="container-fluid" style="
+    width: 70vw;
+    float: left;
+    margin-right: 0;
+    padding-right: 0">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Mercadinho do Jorge</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Estoque</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Page 1-1</a></li>
+                    <li><a href="#">Page 1-2</a></li>
+                    <li><a href="#">Page 1-3</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Page 2</a></li>
+            <li><a href="#">Page 3</a></li>
+        </ul>
+    </div>
+    <div style="
+    width: 30vw;
+    text-align: end;
+    padding: 11pt">
+    <a th:href="@{/logout}" alt="Sair" title="Sair"><iconify-icon icon="majesticons:door-exit-line" style="color: white" width="20" height="20"></iconify-icon></a>
+    </div>
+</nav>
+
 <div class="panel panel-default" style="margin: 10px">
+
     <div class="panel-heading">
         <h1 class="panel-title">Produtos Disponíveis</h1>
     </div>
     <div class="panel-body">
+        <div th:replace="Alerts"></div>
+        <form class="form-inline" method="POST" th:action="@{/}" style="margin: 20px 0" th:object="${product}">
+            <div class="form-group">
+                <input type="hidden"
+                       th:field="*{id}"/>
+                <input type="text" class="form-control"
+                       placeholder="Nome"
+                       th:field="*{name}"/>
+                <input type="text" class="form-control"
+                       placeholder="Preço"
+                       th:field="*{price}"/>
+                <input type="text" class="form-control"
+                       placeholder="Quantidade"
+                       th:field="*{quantity}"/>
+                <button type="submit"
+                        th:class="${id == null} ? 'btn btn-primary' : 'btn btn-warning'"
+                        th:text="${id == null} ? 'Adicionar' : 'Salvar edição'"
+                        >Salvar</button>
+            </div>
+        </form>
         <table class="table">
             <thead>
             <tr>
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
+                <th>Opções</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +83,10 @@
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.quantity}"></td>
+                <td><a class="btn"
+                       th:href="@{/edit/{id} (id=${product.id}) }">Editar</a></td>
+                <td><a class="btn"
+                       th:href="@{/delete/{id} (id=${product.id}) }">Excluir</a></td>
             </tr>
             </thead>
             </tbody>
