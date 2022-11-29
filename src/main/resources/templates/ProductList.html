@@ -5,7 +5,6 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width" />
     <title>Produtos</title>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -55,18 +54,17 @@
                 <input type="hidden"
                        th:field="*{id}"/>
                 <input type="text" class="form-control"
-                       placeholder="Nome"
+                       placeholder="Nome" required="required"
                        th:field="*{name}"/>
-                <input type="text" class="form-control"
-                       placeholder="Preço"
+                <input type="text" class="form-control" maxlength="7" placeholder="0.0"
                        th:field="*{price}"/>
-                <input type="text" class="form-control"
-                       placeholder="Quantidade"
-                       th:field="*{quantity}"/>
+                <input type="number" class="form-control"
+                       placeholder="Qtd" required="required"
+                       th:field="*{quantity}" max="10000" min="0"/>
                 <button type="submit"
                         th:class="${id == null} ? 'btn btn-primary' : 'btn btn-warning'"
                         th:text="${id == null} ? 'Adicionar' : 'Salvar edição'"
-                        >Salvar</button>
+                >Salvar</button>
             </div>
         </form>
         <table class="table">
@@ -85,17 +83,33 @@
                 <td th:text="${product.quantity}"></td>
                 <td><a class="btn"
                        th:href="@{/edit/{id} (id=${product.id}) }">Editar</a></td>
-                <td><a class="btn"
-                       th:href="@{/delete/{id} (id=${product.id}) }">Excluir</a></td>
+                <td>
+                    <button th:id="${ 'btn_delete/' + product.id}" type="button" class="btn"
+                            data-toggle="modal" data-target="#myModal">
+                        Excluir
+                    </button>
+                </td>
             </tr>
             </thead>
             </tbody>
         </table>
     </div>
+    <div th:replace="Modal :: modal"></div>
 </div>
-
-
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+var url_base = '/';
+var id_user = '';
+
+$('button[id*="btn_"]').click(function() {
+    id_user = $(this).attr('id').split("_")[1];
+    url = url_base + id_user;
+});
+
+$('#ok_confirm_exclusao').click(function() {
+    document.location.href = url;
+});
+</script>
 </body>
 </html>
