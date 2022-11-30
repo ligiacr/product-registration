@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="~{Layout.html}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Vendas</title>
+</head>
+
+<section layout:fragment="content" class="panel panel-default" style="margin: 10px">
+
+    <h2>Vendas</h2>
+    <a class="btn btn-primary"
+       th:href="@{/sell/new}">Nova</a>
+
+</section>
+<div layout:fragment="scripts"></div>
+</html>

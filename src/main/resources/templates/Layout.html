@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width" />
+  <title>Mercadinho do Jorge</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse" style="display:inline-flex">
+  <div class="container-fluid" style="
+    width: 70vw;
+    float: left;
+    margin-right: 0;
+    padding-right: 0">
+    <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/}">Mercadinho do Jorge</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li> <a th:href="@{/}">Estoque</a></li>
+      <li><a th:href="@{/sell}">Vendas</a>
+      </li>
+    </ul>
+  </div>
+  <div style="
+    width: 30vw;
+    text-align: end;
+    padding: 11pt">
+    <a th:href="@{/logout}" alt="Sair" title="Sair"><iconify-icon icon="majesticons:door-exit-line" style="color: white" width="20" height="20"></iconify-icon></a>
+  </div>
+</nav>
+<section layout:fragment="content"></section>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script>
+var url_base = '/';
+var id_user = '';
+
+$('button[id*="btn_"]').click(function() {
+    id_user = $(this).attr('id').split("_")[1];
+    url = url_base + id_user;
+});
+
+$('#ok_confirm_exclusao').click(function() {
+    document.location.href = url;
+});
+</script>
+<div layout:fragment="scripts"></div>
+</body>
+</html>
