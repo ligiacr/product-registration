@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -26,17 +27,24 @@ public class Sell implements Serializable {
     private Long id;
 
     @ManyToMany(cascade = CascadeType.DETACH)
-    @JoinTable(name = "tb_sell_product",
+    @JoinTable(name = "tb_sell_items",
             joinColumns = {@JoinColumn(name = "id_sell", referencedColumnName = "id_sell")},
-            inverseJoinColumns = {@JoinColumn(name = "id_product", referencedColumnName = "id_product")})
-    private List<Product> products;
+            inverseJoinColumns = {@JoinColumn(name = "id_item", referencedColumnName = "id_item")})
+    private List<Item> items;
 
     @Column
     @NotNull
-    private BigDecimal value;
+    private BigDecimal valueTotal;
 
-    @Column
-    @NotNull
-    private Integer quantity;
+    @Column(name = "payment_type")
+    @Enumerated(value = EnumType.STRING)
+    private PaymentType paymentType;
 
+    @Column(name = "client_name")
+    private String clientName;
+
+    @Column(name = "date")
+    private LocalDateTime date;
+
+    /* Implementar outras caracteristicas da venda */
 }

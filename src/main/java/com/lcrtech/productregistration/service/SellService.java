@@ -14,7 +14,6 @@ public class SellService {
     private SellRepository sellRepository;
 
     public List<Sell> listSell() {
-
         return sellRepository.findAll();
     }
 }
