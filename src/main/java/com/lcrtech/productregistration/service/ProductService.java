@@ -33,8 +33,13 @@ public class ProductService {
         return productOptional.get();
     }
 
+    public List<Product> findProductByAnyData(String data) {
+
+        return productRepository.findProductByAnyData(data);
+    }
+
     public Product updateProduct(Product product) {
-        // Busca a linha do objeto e devolve //
+
         if(product.getId() != null) {
             Product old = this.findProductById(product.getId());
             product.setId(old.getId());

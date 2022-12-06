@@ -3,10 +3,13 @@ package com.lcrtech.productregistration.controller;
 import com.lcrtech.productregistration.model.Product;
 import com.lcrtech.productregistration.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -25,6 +28,12 @@ public class ProductController {
         return mav;
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<Product>>findProducts(@RequestParam(name="value") String data) {
+
+        return ResponseEntity.ok(productService.findProductByAnyData(data));
+    }
+
     @PostMapping
     public String save(Product product) {
         productService.saveProduct(product);
@@ -33,7 +42,7 @@ public class ProductController {
     }
 
    @GetMapping("/edit/{id}")
-   public ModelAndView edit(@PathVariable("id") Long id, RedirectAttributes ra) {
+   public ModelAndView edit(@PathVariable("id") Long id) {
         ModelAndView mav = new ModelAndView("ProductList");
         mav.addObject("product", productService.findProductById(id));
         mav.addObject("products", productService.listProducts());

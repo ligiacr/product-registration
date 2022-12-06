@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/Layout"
+      layout:decorate="~{Layout.html}">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Nova Venda</title>
+</head>
+
+<section layout:fragment="content" class="panel panel-default" style="margin: 10px">
+
+        <div th:replace="Alerts"></div>
+        <form class="form-inline" method="POST" th:action="@{/}" style="margin: 20px 0" th:object="${sell}">
+            <div class="form-group">
+                <h4>Nova venda</h4>
+                <input type="text" class="form-control"
+                       placeholder="Nome do cliente" required="required"
+                       th:field="*{clientName}"/>
+                <input type="text" class="form-control"
+                       placeholder="Tipo de pagamento" required="required"
+                       th:field="*{paymentType}" max="10000" min="0"/>
+                <input type="text" class="form-control" maxlength="7" placeholder="Valor total"
+                       th:field="*{valueTotal}"/>
+                <button type="submit"
+                        th:class="${id == null} ? 'btn btn-primary' : 'btn btn-warning'"
+                        th:text="${id == null} ? 'Adicionar' : 'Salvar edição'"
+                >Salvar</button>
+            </div>
+        </form>
+            <br>
+    <div class= "form-group col-sm-4">
+        <h4>Pesquisar item</h4>
+        <input id="autocomplete" type="text" class="form-control"
+               placeholder="Digite o código de barras ou id ou o nome do produto"/>
+    </div>
+
+</section>
+<div layout:fragment="scripts"></div>
+</html>
