@@ -23,8 +23,6 @@
                 <input type="text" class="form-control" maxlength="7" placeholder="Valor total"
                        th:field="*{valueTotal}"/>
                 <button type="submit"
-                        th:class="${id == null} ? 'btn btn-primary' : 'btn btn-warning'"
-                        th:text="${id == null} ? 'Adicionar' : 'Salvar edição'"
                 >Salvar</button>
             </div>
         </form>
@@ -34,6 +32,20 @@
         <input id="autocomplete" type="text" class="form-control"
                placeholder="Digite o código de barras ou id ou o nome do produto"/>
     </div>
+
+    <table id="table" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Nome do produto</th>
+            <th>Valor unitário</th>
+            <th>Quantidade</th>
+            <th>Subtotal</th>
+            <th>Exclusão</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
 </section>
 <div layout:fragment="scripts"></div>

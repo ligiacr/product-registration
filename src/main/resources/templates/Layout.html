@@ -6,7 +6,12 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width" />
   <title>Mercadinho do Jorge</title>
-
+  <style>
+    .edit:focus, .edit:hover {
+    text-decoration: none !important;
+    color: #337ab700 !important;
+    }
+  </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -143,7 +148,9 @@ $("#autocomplete").autocomplete({
 					return {
 					    id: item.id,
 						name: item.name,
-						label: item.name
+						label: item.name,
+						price: item.price,
+						quantity: item.quantity
 					}
 				}));
 				console.log(result);
@@ -152,9 +159,23 @@ $("#autocomplete").autocomplete({
 	},
 	minLength: 1,
 	select: function(event, ui, objeto) {
-      	alert("Objeto escolhido: " + ui.item.name);
+      	$('#table tbody').append('<tr id="' + ui.item.id + '">'+
+      	'<td>' + ui.item.name + '</td>' +
+      	'<td>' + 'R$ ' + ui.item.price.toFixed(2) + '</td>' +
+      	'<td>' + ui.item.quantity + '</td>' +
+      	'<td>' + 'R$ ' + (ui.item.price * ui.item.quantity).toFixed(2) + '</td>' +
+      	'<td> <a onClick="deleteRow(' + ui.item.id +')">Excluir</a>' +
+                '</td>'
+      	+'</tr>');
 	},
 });
+
+let ids = $('table tr[id]').map(function() { return this.id; }).get();
+
+function deleteRow(id) {
+ let row = document.getElementById(id);
+    row.parentNode.removeChild(row);
+}
 </script>
 </body>
 </html>

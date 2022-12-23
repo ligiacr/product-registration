@@ -47,12 +47,12 @@
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.quantity}"></td>
-                <td><a class="btn"
-                       th:href="@{/edit/{id} (id=${product.id}) }">Editar</a></td>
-                <td>
-                    <button th:id="${ 'btn_delete/' + product.id}" type="button" class="btn"
-                            data-toggle="modal" data-target="#myModal">
-                        Excluir
+                <td><a class="edit" th:href="@{/edit/{id} (id=${product.id}) }" alt="Editar" title="Editar">
+                    <iconify-icon icon="material-symbols:edit-document-outline" style="color: black" width="20" height="20" ></iconify-icon>
+                </a>
+                    <button th:id="${ 'btn_delete/' + product.id}"
+                            data-toggle="modal" data-target="#myModal" alt="Excluir" title="Excluir" style="border: none; background-color: rgb(0 0 0 / 0%)">
+                        <iconify-icon icon="ion:trash" style="color: black" width="20" height="20" ></iconify-icon>
                     </button>
                 </td>
             </tr>

@@ -37,10 +37,12 @@ public class Sell implements Serializable {
     private BigDecimal valueTotal;
 
     @Column(name = "payment_type")
+    @NotNull
     @Enumerated(value = EnumType.STRING)
     private PaymentType paymentType;
 
     @Column(name = "client_name")
+    @NotNull
     private String clientName;
 
     @Column(name = "date")
