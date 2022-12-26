@@ -172,7 +172,7 @@ $("#autocomplete").autocomplete({
             $('#table tbody').append('<tr id="' + ui.item.id + '">'+
             '<td>' + ui.item.name + '</td>' +
             '<td>' + 'R$ ' + ui.item.price.toFixed(2) + '</td>' +
-            '<td>' + 1 + '</td>' +
+            '<td>' + '<input type="number" class="form-control" onchange="countItems(this)" required="required" onKeyDown="return false" max="10000" min="0"/>' + '</td>' +
             '<td>' + 'R$ ' + (ui.item.price * 1).toFixed(2) + '</td>' +
             '<td> <a onClick="deleteRow(' + ui.item.id +')">Excluir</a>' +
                     '</td>'
@@ -188,12 +188,15 @@ $("#autocomplete").autocomplete({
 	},
 });
 
-let ids = $('table tr[id]').map(function() { return this.id; }).get();
-
 function deleteRow(id) {
  let row = document.getElementById(id);
     row.parentNode.removeChild(row);
 }
+
+function countItems(attr) {
+console.log(attr);
+}
+
 </script>
 </body>
 </html>
