@@ -172,7 +172,12 @@ $("#autocomplete").autocomplete({
             $('#table tbody').append('<tr id="' + ui.item.id + '">'+
             '<td>' + ui.item.name + '</td>' +
             '<td>' + 'R$ ' + ui.item.price.toFixed(2) + '</td>' +
-            '<td>' + '<input type="number" class="form-control" onchange="countItems(this)" required="required" onKeyDown="return false" max="10000" min="0"/>' + '</td>' +
+            '<td>'
+             + '<span onClick="decrease(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1ZM8 11a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2H8Z" clip-rule="evenodd"/></svg></span>'
+             + '<p name="quantity">' + 1 + '</p>'
+             + '<span onClick="increase(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg></span>'
+             + '</td>' +
+            //'<td>' + '<input type="number" class="form-control" onchange="countItems(this)" required="required" onKeyDown="return false" max="10000" min="0"/>' + '</td>' +
             '<td>' + 'R$ ' + (ui.item.price * 1).toFixed(2) + '</td>' +
             '<td> <a onClick="deleteRow(' + ui.item.id +')">Excluir</a>' +
                     '</td>'
@@ -181,7 +186,7 @@ $("#autocomplete").autocomplete({
           let valorAntigo = parseInt($("#" + ui.item.id).find('td').eq(2).text());
           let novoValor = valorAntigo + 1;
           let idRow = "#" + ui.item.id;
-          $("#" + ui.item.id).find('td').eq(2).text(novoValor);
+          $("#" + ui.item.id).find('td').eq(2)[0].children[1].innerText = novoValor;
           $("#" + ui.item.id).find('td').eq(3).text((novoValor * ui.item.price).toFixed(2));
         }
 
@@ -194,7 +199,29 @@ function deleteRow(id) {
 }
 
 function countItems(attr) {
-console.log(attr);
+  console.log(attr);
+}
+
+function increase(id) {
+  let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) + 1;
+  let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ',''));
+
+  $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
+  $("#" + id).find('td').eq(3).text('R$ ' +(currentQtd * unitPrice).toFixed(2));
+}
+
+function decrease(id) {
+  let oldQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText);
+  let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) - 1;
+  let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ',''));
+
+  if(oldQtd === 1) {
+     let row = document.getElementById(id);
+     row.parentNode.removeChild(row);
+  } else {
+    $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
+    $("#" + id).find('td').eq(3).text('R$ ' + (currentQtd * unitPrice).toFixed(2));
+  }
 }
 
 </script>
