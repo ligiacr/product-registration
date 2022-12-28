@@ -19,7 +19,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll();
+                .permitAll()
+                .and()
+                .logout().logoutSuccessUrl("/login");
     }
 
     @Autowired
@@ -29,7 +31,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("jorge").password("{noop}1234").roles("USER");
     }
-
-
 }
 

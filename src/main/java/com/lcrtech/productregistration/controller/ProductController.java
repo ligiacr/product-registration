@@ -21,7 +21,7 @@ public class ProductController {
 
     @GetMapping
     public ModelAndView listProducts(RedirectAttributes redirectAttributes) {
-        ModelAndView mav = new ModelAndView("ProductList");
+        ModelAndView mav = new ModelAndView("home");
         mav.addObject("products", productService.listProducts());
         mav.addObject(new Product());
 
@@ -43,7 +43,7 @@ public class ProductController {
 
    @GetMapping("/edit/{id}")
    public ModelAndView edit(@PathVariable("id") Long id) {
-        ModelAndView mav = new ModelAndView("ProductList");
+        ModelAndView mav = new ModelAndView("home");
         mav.addObject("product", productService.findProductById(id));
         mav.addObject("products", productService.listProducts());
 

@@ -18,7 +18,7 @@ public class SellController {
 
     @GetMapping
     public ModelAndView listSell(RedirectAttributes ra) {
-        ModelAndView mav = new ModelAndView("Sell/Sell");
+        ModelAndView mav = new ModelAndView("sell/sell");
         mav.addObject("sales", sellService.listSell());
         mav.addObject(new Sell());
 
@@ -27,7 +27,7 @@ public class SellController {
 
     @GetMapping("/new")
     public ModelAndView newSell() {
-        ModelAndView mav = new ModelAndView("Sell/New");
+        ModelAndView mav = new ModelAndView("sell/new");
         mav.addObject(new Sell());
 
         return mav;
