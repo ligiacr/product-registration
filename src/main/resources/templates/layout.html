@@ -228,6 +228,20 @@ function decrease(id) {
   }
 }
 
+$(document).ready(function() {
+    var table = $('#table').DataTable({
+    data: [[${newSales}]],
+        columns: [
+           { data: 'clientName' },
+            { data: 'paymentType' },
+            { data: 'valueTotal' },
+            { data: 'name' },
+            { data: 'price' },
+            { data: 'quantity' },
+            { data: 'subTotal' }
+        ],
+    });
+});
 </script>
 </body>
 </html>
