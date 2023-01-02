@@ -241,8 +241,6 @@ function updateTotalValue() {
           let unitValue = parseFloat($(tr).find('td').eq(1).text().replace('R$ ',''));
           let quantity = parseInt($(tr).find('td').eq(2).text())
           totalValue = totalValue + (unitValue * quantity);
-      } else {
-        console.log('index igual a zero');
       }
   };
   var valueTotalAntigo = parseFloat($("#valueTotal").text() == '' ? 0.0 : $("#valueTotal").text());
@@ -284,6 +282,7 @@ $("#salvarVenda").click(function() {
       contentType: "application/json",
       url : "/sell/save",
       cache: false,
+      processData: false,
       data : JSON.stringify({
           clientName: $("#clientName").val(),
           paymentType: paymentType,
@@ -291,8 +290,13 @@ $("#salvarVenda").click(function() {
           items: products
       }),
       success : function(result) {
-        alert(result.responseText)
+        console.log("SUCCESS");
+        alert(result.responseText);
       },
+      error : function(result) {
+        console.log("ERROR");
+        alert(result.responseText);
+      }
   });
 
 });

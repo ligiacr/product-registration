@@ -38,9 +38,10 @@ public class SellController {
         return mav;
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> newSell(@RequestBody SellDTO dto) {
         System.out.println(dto);
-        return ResponseEntity.ok("Venda realizada com sucesso!");
+        return ResponseEntity.ok().body("Venda realizada com sucesso!");
     }
 }
