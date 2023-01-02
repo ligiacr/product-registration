@@ -278,11 +278,11 @@ $("#salvarVenda").click(function() {
 
   $.ajax({
       method: "POST",
-      dataType: "json",
+      dataType: "text",
       contentType: "application/json",
       url : "/sell/save",
       cache: false,
-      processData: false,
+      processData: true,
       data : JSON.stringify({
           clientName: $("#clientName").val(),
           paymentType: paymentType,
@@ -290,11 +290,9 @@ $("#salvarVenda").click(function() {
           items: products
       }),
       success : function(result) {
-        console.log("SUCCESS");
-        alert(result.responseText);
+        alert(result);
       },
       error : function(result) {
-        console.log("ERROR");
         alert(result.responseText);
       }
   });
