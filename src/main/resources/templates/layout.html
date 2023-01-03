@@ -48,8 +48,6 @@
   </div>
 </nav>
 <section layout:fragment="content"></section>
-<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
 <script th:inline="javascript">
 var url_base = '/';
 var id_user = '';
@@ -71,7 +69,7 @@ function format(d) {
     for (;i < d.items.length; i++) {
         linhas = linhas +
             '<tr>' +
-              '<td><b>Desc. item:</b> ' + d.items[i].productName + '<b>, Quantidade: </b> ' + d.items[i].quantity + '<b>, subtotal: </b> ' + d.items[i].subTotal + '</td>' +
+              '<td><b>Desc. item:</b> ' + d.items[i].productName + '<b>; Quantidade: </b> ' + d.items[i].quantity + '<b>; Subtotal: </b> ' + 'R$ ' + d.items[i].subTotal.toFixed(2) + '</td>' +
             '</tr>'
     }
     return (

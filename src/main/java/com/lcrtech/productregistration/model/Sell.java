@@ -1,15 +1,19 @@
 package com.lcrtech.productregistration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,11 +30,11 @@ public class Sell implements Serializable {
     @Column(name="id_sell")
     private Long id;
 
-    @ManyToMany(cascade = CascadeType.DETACH)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tb_sell_items",
             joinColumns = {@JoinColumn(name = "id_sell", referencedColumnName = "id_sell")},
             inverseJoinColumns = {@JoinColumn(name = "id_item", referencedColumnName = "id_item")})
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
 
     @Column
     @NotNull
@@ -42,11 +46,11 @@ public class Sell implements Serializable {
     private PaymentType paymentType;
 
     @Column(name = "client_name")
-    @NotNull
+    @NotBlank
     private String clientName;
 
     @Column(name = "date")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime date;
 
-    /* Implementar outras caracteristicas da venda */
 }

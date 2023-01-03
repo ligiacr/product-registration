@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,9 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SellDTO {
 
-    private String clientName;
-    private PaymentType paymentType;
-    private BigDecimal valueTotal;
+    private Long id;
     private List<ItemDTO> items;
+    private BigDecimal valueTotal;
+    private PaymentType paymentType;
+    private String clientName;
+    private LocalDateTime date;
 
 }
