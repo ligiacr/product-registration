@@ -13,11 +13,18 @@
 </head>
 
 <section layout:fragment="content" class="panel panel-default" style="margin: 10px">
-
-    <h4>Vendas</h4>
-    <a class="btn btn-primary"
-       th:href="@{/sell/new}" style="padding-left: 15px;">Nova</a>
-
+    <div class="panel-heading">
+        <h1 class="panel-title">Vendas</h1>
+    </div>
+    <div class="panel-body">
+    <div th:if="${#lists.isEmpty(sales)}">
+        <div class="alert alert-danger">Não há vendas no histórico</div>
+    </div>
+        <div class="center">
+        <a role="button" th:href="@{/sell/new}">Nova venda</a>
+        </div>
+    <div th:if="${not #lists.isEmpty(sales)}">
+        <hr>
     <h4>Histórico de Vendas</h4>
 
     <table id="example" class="display" style="width:100%">
@@ -36,6 +43,8 @@
         </tr>
         </tfoot>
     </table>
+    </div>
+    </div>
 
 </section>
 </html>

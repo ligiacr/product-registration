@@ -28,7 +28,7 @@
                        placeholder="Qtd" required="required"
                        th:field="*{quantity}" max="10000" min="0"/>
                 <button type="submit"
-                        th:class="${id == null} ? 'btn btn-primary' : 'btn btn-warning'"
+                        th:class="${id == null} ? 'btn' : 'btn btn-warning'"
                         th:text="${id == null} ? 'Adicionar' : 'Salvar edição'"
                 >Salvar</button>
             </div>
