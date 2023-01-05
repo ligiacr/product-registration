@@ -35,7 +35,7 @@ public class Item implements Serializable {
 
     @NotNull
     @Column(name = "id_product_fk")
-    private Integer productId;
+    private Long productId;
 
     @NotBlank
     @Column(name = "product_name")

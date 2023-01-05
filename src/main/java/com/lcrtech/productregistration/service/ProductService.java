@@ -1,5 +1,7 @@
 package com.lcrtech.productregistration.service;
 
+import com.lcrtech.productregistration.exception.ItemsNotFoundException;
+import com.lcrtech.productregistration.model.Item;
 import com.lcrtech.productregistration.model.Product;
 import com.lcrtech.productregistration.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +16,6 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-
-    private Product product;
 
     public Product saveProduct(Product product) {
 
@@ -45,6 +45,17 @@ public class ProductService {
             product.setId(old.getId());
         }
         return productRepository.save(product);
+    }
+
+    public void updateQuantity(Item item) {
+        Product product = this.findProductById(item.getProductId());
+
+        if(item.getQuantity() > product.getQuantity()) {
+            throw new ItemsNotFoundException();
+        }
+
+        product.setQuantity(product.getQuantity() - item.getQuantity());
+        this.saveProduct(product);
     }
 
     public void deleteProduct(Long id) {

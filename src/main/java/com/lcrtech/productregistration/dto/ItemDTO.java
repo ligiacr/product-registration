@@ -14,6 +14,6 @@ public class ItemDTO {
     private Long id;
     private BigDecimal subTotal;
     private Integer quantity;
-    private Integer productId;
+    private Long productId;
     private String productName;
 }
