@@ -1,6 +1,6 @@
 package com.lcrtech.productregistration.service;
 
-import com.lcrtech.productregistration.exception.ItemsNotFoundException;
+import com.lcrtech.productregistration.exception.QuantityItemsException;
 import com.lcrtech.productregistration.model.Item;
 import com.lcrtech.productregistration.model.Product;
 import com.lcrtech.productregistration.repository.ProductRepository;
@@ -47,15 +47,17 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-    public void updateQuantity(Item item) {
-        Product product = this.findProductById(item.getProductId());
+    public void updateQuantity(List<Item> items) {
+        items.stream().forEach(item -> {
+            Product product = this.findProductById(item.getProductId());
 
-        if(item.getQuantity() > product.getQuantity()) {
-            throw new ItemsNotFoundException();
-        }
+            if (item.getQuantity() > product.getQuantity()) {
+                throw new QuantityItemsException();
+            }
 
-        product.setQuantity(product.getQuantity() - item.getQuantity());
-        this.saveProduct(product);
+            product.setQuantity(product.getQuantity() - item.getQuantity());
+            this.saveProduct(product);
+        });
     }
 
     public void deleteProduct(Long id) {

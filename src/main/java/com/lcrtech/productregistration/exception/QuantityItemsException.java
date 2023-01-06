@@ -1,6 +1,6 @@
 package com.lcrtech.productregistration.exception;
 
-public class ItemsNotFoundException extends RuntimeException {
+public class QuantityItemsException extends RuntimeException {
 
         @Override
         public String getMessage() {

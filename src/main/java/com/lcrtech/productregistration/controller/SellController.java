@@ -1,7 +1,7 @@
 package com.lcrtech.productregistration.controller;
 
 import com.lcrtech.productregistration.dto.SellDTO;
-import com.lcrtech.productregistration.exception.ItemsNotFoundException;
+import com.lcrtech.productregistration.exception.QuantityItemsException;
 import com.lcrtech.productregistration.model.Item;
 import com.lcrtech.productregistration.model.Sell;
 import com.lcrtech.productregistration.service.ProductService;
@@ -49,27 +49,26 @@ public class SellController {
     public ResponseEntity<String> newSell(@RequestBody SellDTO dto) {
         dto.setDate(LocalDateTime.now());
         Sell sell = new Sell();
-        Item item = new Item();
         List<Item> items = new ArrayList<>();
-        convert(dto, sell, item, items);
+        convert(dto, sell, items);
         try {
-            productService.updateQuantity(item);
+            productService.updateQuantity(items);
             sellService.saveSell(sell);
 
             return ResponseEntity.ok().body("Venda realizada com sucesso!");
-
-        } catch (ItemsNotFoundException e) {
+        } catch (QuantityItemsException e) {
             System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body("Erro ao processar a venda! Quantidade indisponível em estoque.");
         }
-        return ResponseEntity.badRequest().body("Erro ao processar a venda! Quantidade indisponível em estoque.");
     }
 
-    private void convert(SellDTO dto, Sell sell, Item item, List<Item> items) {
+    private void convert(SellDTO dto, Sell sell, List<Item> items) {
+        BeanUtils.copyProperties(dto, sell);
         dto.getItems().forEach(i -> {
+            Item item = new Item();
             BeanUtils.copyProperties(i, item);
             items.add(item);
         });
         sell.getItems().addAll(items);
-        BeanUtils.copyProperties(dto, sell);
     }
 }
