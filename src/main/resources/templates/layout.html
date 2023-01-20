@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width" />
   <title>Mercadinho do Jorge</title>
   <style>
-    .edit:focus, .edit:hover {
-    text-decoration: none !important;
-    color: #337ab700 !important;
+    .edit:focus,
+    .edit:hover {
+      text-decoration: none !important;
+      color: #337ab700 !important;
     }
   </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -21,283 +22,295 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
   <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
+
 <body>
-<nav class="navbar navbar-inverse" style="display:inline-flex">
-  <div class="container-fluid" style="
+  <nav class="navbar navbar-inverse" style="display:inline-flex">
+    <div class="container-fluid" style="
     width: 70vw;
     float: left;
     margin-right: 0;
     padding-right: 0">
-    <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{/}">Mercadinho do Jorge</a>
+      <div class="navbar-header">
+        <a class="navbar-brand" th:href="@{/}">Mercadinho do Jorge</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li> <a th:href="@{/}">Estoque</a></li>
+        <li><a th:href="@{/sell}">Vendas</a>
+        </li>
+      </ul>
     </div>
-    <ul class="nav navbar-nav">
-      <li> <a th:href="@{/}">Estoque</a></li>
-      <li><a th:href="@{/sell}">Vendas</a>
-      </li>
-    </ul>
-  </div>
-  <div style="
+    <div style="
     width: 30vw;
     text-align: end;
     padding: 11pt">
-    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-      <button alt="Sair" title="Sair" style="background-color: #00800000; border: none;">
-        <iconify-icon icon="majesticons:door-exit-line" style="color: white" width="20" height="20"></iconify-icon>
-      </button>
-    </form>
-  </div>
-</nav>
-<section layout:fragment="content"></section>
+      <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+        <button alt="Sair" title="Sair" style="background-color: #00800000; border: none;">
+          <iconify-icon icon="majesticons:door-exit-line" style="color: white" width="20" height="20"></iconify-icon>
+        </button>
+      </form>
+    </div>
+  </nav>
+  <section layout:fragment="content"></section>
+</body>
 <script th:inline="javascript">
-var url_base = '/';
-var id_user = '';
+  var url_base = '/';
+  var id_user = '';
 
-$('button[id*="btn_"]').click(function () {
+  $('button[id*="btn_"]').click(function () {
     id_user = $(this).attr('id').split("_")[1];
     url = url_base + id_user;
-});
+  });
 
-$('#ok_confirm_exclusao').click(function () {
+  $('#ok_confirm_exclusao').click(function () {
     document.location.href = url;
-});
+  });
 
-/* Formatting function for row details - modify as you need */
-function format(d) {
+  /* Formatting function for row details - modify as you need */
+  function format(d) {
     // `d` is the original data object for the row
     let linhas = '';
     let i = 0;
-    for (;i < d.items.length; i++) {
-        linhas = linhas +
-            '<tr>' +
-              '<td><b>Desc. item:</b> ' + d.items[i].productName + '<b>; Quantidade: </b> ' + d.items[i].quantity + '<b>; Subtotal: </b> ' + 'R$ ' + d.items[i].subTotal.toFixed(2) + '</td>' +
-            '</tr>'
+    for (; i < d.items.length; i++) {
+      linhas = linhas +
+        '<tr>' +
+        '<td><b>Desc. item:</b> ' + d.items[i].productName + '<b>; Quantidade: </b> ' + d.items[i].quantity + '<b>; Subtotal: </b> ' + 'R$ ' + d.items[i].subTotal.toFixed(2) + '</td>' +
+        '</tr>'
     }
     return (
-        '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' + linhas + '</table>'
+      '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' + linhas + '</table>'
     );
-}
+  }
 
-$(document).ready(function () {
+  $(document).ready(function () {
     var table = $('#example').DataTable({
-        "language": {
-            "lengthMenu": " _MENU_ Linhas por página",
-            "zeroRecords": "Nenhum registro encontrado",
-            "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-            "infoEmpty": "Nenhum resultado",
-            "infoFiltered": "(filtrados de  MAX registros)",
-            "sInfoPostFix": "",
-            "sInfoThousands": ".",
-            "sLoadingRecords": "Carregando...",
-            "sProcessing": "Processando...",
-            "sSearch": "Pesquisar",
-            "oPaginate": {
-                "sNext": "Próximo",
-                "sPrevious": "Anterior",
-                "sFirst": "Primeiro",
-                "sLast": "Último"
-            },
-            "oAria": {
-                "sSortAscending": ": Ordenar colunas de forma ascendente",
-                "sSortDescending": ": Ordenar colunas de forma descendente"
-            }
+      "language": {
+        "lengthMenu": " _MENU_ Linhas por página",
+        "zeroRecords": "Nenhum registro encontrado",
+        "info": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+        "infoEmpty": "Nenhum resultado",
+        "infoFiltered": "(filtrados de  MAX registros)",
+        "sInfoPostFix": "",
+        "sInfoThousands": ".",
+        "sLoadingRecords": "Carregando...",
+        "sProcessing": "Processando...",
+        "sSearch": "Pesquisar",
+        "oPaginate": {
+          "sNext": "Próximo",
+          "sPrevious": "Anterior",
+          "sFirst": "Primeiro",
+          "sLast": "Último"
         },
-        data: [[${sales}]],
-        columns: [
-            {
-                className: 'dt-control',
-                orderable: false,
-                data: null,
-                defaultContent: '',
-            },
-            { data: 'clientName' },
-            { data: 'paymentType' },
-            { data: 'date' },
-            { data: 'valueTotal' }
-        ],
-        order: [
-            [1, 'asc']
-        ],
+        "oAria": {
+          "sSortAscending": ": Ordenar colunas de forma ascendente",
+          "sSortDescending": ": Ordenar colunas de forma descendente"
+        }
+      },
+      data: [[${ sales }]],
+      columns: [
+        {
+          className: 'dt-control',
+          orderable: false,
+          data: null,
+          defaultContent: '',
+        },
+        { data: 'clientName' },
+        { data: 'paymentType' },
+        { data: 'date' },
+        { data: 'valueTotal' }
+      ],
+      order: [
+        [1, 'asc']
+      ],
     });
 
     // Add event listener for opening and closing details
     $('#example tbody').on('click', 'td.dt-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
+      var tr = $(this).closest('tr');
+      var row = table.row(tr);
 
-        if (row.child.isShown()) {
-            // This row is already open - close it
-            row.child.hide();
-            tr.removeClass('shown');
-        } else {
-            // Open this row
-            row.child(format(row.data())).show();
-            tr.addClass('shown');
-        }
+      if (row.child.isShown()) {
+        // This row is already open - close it
+        row.child.hide();
+        tr.removeClass('shown');
+      } else {
+        // Open this row
+        row.child(format(row.data())).show();
+        tr.addClass('shown');
+      }
     });
-});
+  });
 
-$("#autocomplete").autocomplete({
-	source : function(request, response) {
-		$.ajax({
-			method : "GET",
-			url : "/find",
-			contentType: "application/json;charset=utf-8",
-			cache: false,
-			data : {
-				value: request.term,
-			},
-			success : function(result) {
-				response($.map(result, function(item){
-					return {
-					    id: item.id,
-						name: item.name,
-						label: item.name,
-						price: item.price,
-						quantity: item.quantity
-					}
-				}));
-			},
-		});
-	},
-	minLength: 1,
-	select: function(event, ui, objeto) {
-        let alreadyExist = false;
+  $("#autocomplete").autocomplete({
+    source: function (request, response) {
+      $.ajax({
+        method: "GET",
+        url: "/find",
+        contentType: "application/json;charset=utf-8",
+        cache: false,
+        data: {
+          value: request.term,
+        },
+        success: function (result) {
+          response($.map(result, function (item) {
+            return {
+              id: item.id,
+              name: item.name,
+              label: item.name,
+              price: item.price,
+              quantity: item.quantity
+            }
+          }));
+        },
+      });
+    },
+    minLength: 1,
+    select: function (event, ui, objeto) {
+      let alreadyExist = false;
 
-        var table = $('#table');
-        table.find('tbody > tr').each(function() {
-          if ($(this).attr("id") === (ui.item.id).toString()) {
-            alreadyExist = true;
-          }
-        });
-
-        if(!alreadyExist){
-            $('#table tbody').append('<tr id="' + ui.item.id + '">'+
-            '<td style="padding-left: 15px;">' + ui.item.name + '</td>' +
-            '<td>' + 'R$ ' + ui.item.price.toFixed(2) + '</td>' +
-            '<td style="display: flex;">'
-             + '<span onClick="decrease(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2Zm4 9H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2Z"/></g></svg></span>'
-             + '<p name="quantity" style="margin-left: 7px; margin-right: 7px">' + 1 + '</p>'
-             + '<span onClick="increase(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg></span>'
-             + '</td>' +
-            //'<td>' + '<input type="number" class="form-control" onchange="countItems(this)" required="required" onKeyDown="return false" max="10000" min="0"/>' + '</td>' +
-            '<td>' + 'R$ ' + (ui.item.price * 1).toFixed(2) + '</td>' +
-            '<td> <button onClick="deleteRow(' + ui.item.id +')" style="border: none; background-color: #9acd3200;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="none" d="M296 64h-80a7.91 7.91 0 0 0-8 8v24h96V72a7.91 7.91 0 0 0-8-8Z"/><path fill="currentColor" d="M432 96h-96V72a40 40 0 0 0-40-40h-80a40 40 0 0 0-40 40v24H80a16 16 0 0 0 0 32h17l19 304.92c1.42 26.85 22 47.08 48 47.08h184c26.13 0 46.3-19.78 48-47l19-305h17a16 16 0 0 0 0-32ZM192.57 416H192a16 16 0 0 1-16-15.43l-8-224a16 16 0 1 1 32-1.14l8 224A16 16 0 0 1 192.57 416ZM272 400a16 16 0 0 1-32 0V176a16 16 0 0 1 32 0Zm32-304h-96V72a7.91 7.91 0 0 1 8-8h80a7.91 7.91 0 0 1 8 8Zm32 304.57A16 16 0 0 1 320 416h-.58A16 16 0 0 1 304 399.43l8-224a16 16 0 1 1 32 1.14Z"/></svg></button>' +
-                    '</td>'
-            +'</tr>');
-
-            updateTotalValue();
-        } else {
-          let valorAntigo = parseInt($("#" + ui.item.id).find('td').eq(2).text());
-          let novoValor = valorAntigo + 1;
-          let idRow = "#" + ui.item.id;
-          $("#" + ui.item.id).find('td').eq(2)[0].children[1].innerText = novoValor;
-          $("#" + ui.item.id).find('td').eq(3).text((novoValor * ui.item.price).toFixed(2));
+      var table = $('#table');
+      table.find('tbody > tr').each(function () {
+        if ($(this).attr("id") === (ui.item.id).toString()) {
+          alreadyExist = true;
         }
+      });
 
-	},
-});
+      if (!alreadyExist) {
+        $('#table tbody').append('<tr id="' + ui.item.id + '">' +
+          '<td name= "name" style="padding-left: 15px;">' + ui.item.name + '</td>' +
+          '<td name= "price">' + 'R$ ' + ui.item.price.toFixed(2) + '</td>' +
+          '<td style="display: flex;">'
+          + '<span onClick="decrease(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2Zm4 9H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2Z"/></g></svg></span>'
+          + '<p name="quantity" style="margin-left: 7px; margin-right: 7px">' + 1 + '</p>'
+          + '<span onClick="increase(' + ui.item.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"/></svg></span>'
+          + '</td>' +
+          //'<td>' + '<input type="number" class="form-control" onchange="countItems(this)" required="required" onKeyDown="return false" max="10000" min="0"/>' + '</td>' +
+          '<td>' + 'R$ ' + (ui.item.price * 1).toFixed(2) + '</td>' +
+          '<td> <button onClick="deleteRow(' + ui.item.id + ')" style="border: none; background-color: #9acd3200;"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512"><path fill="none" d="M296 64h-80a7.91 7.91 0 0 0-8 8v24h96V72a7.91 7.91 0 0 0-8-8Z"/><path fill="currentColor" d="M432 96h-96V72a40 40 0 0 0-40-40h-80a40 40 0 0 0-40 40v24H80a16 16 0 0 0 0 32h17l19 304.92c1.42 26.85 22 47.08 48 47.08h184c26.13 0 46.3-19.78 48-47l19-305h17a16 16 0 0 0 0-32ZM192.57 416H192a16 16 0 0 1-16-15.43l-8-224a16 16 0 1 1 32-1.14l8 224A16 16 0 0 1 192.57 416ZM272 400a16 16 0 0 1-32 0V176a16 16 0 0 1 32 0Zm32-304h-96V72a7.91 7.91 0 0 1 8-8h80a7.91 7.91 0 0 1 8 8Zm32 304.57A16 16 0 0 1 320 416h-.58A16 16 0 0 1 304 399.43l8-224a16 16 0 1 1 32 1.14Z"/></svg></button>' +
+          '</td>'
+          + '</tr>');
 
-function deleteRow(id) {
- let row = document.getElementById(id);
+        updateTotalValue();
+      } else {
+        let valorAntigo = parseInt($("#" + ui.item.id).find('td').eq(2).text());
+        let novoValor = valorAntigo + 1;
+        let idRow = "#" + ui.item.id;
+        $("#" + ui.item.id).find('td').eq(2)[0].children[1].innerText = novoValor;
+        $("#" + ui.item.id).find('td').eq(3).text((novoValor * ui.item.price).toFixed(2));
+      }
+
+    },
+  });
+
+  function deleteRow(id) {
+    let row = document.getElementById(id);
     row.parentNode.removeChild(row);
     updateTotalValue();
-}
-
-function countItems(attr) {
-  console.log(attr);
-}
-
-function increase(id) {
-  let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) + 1;
-  let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ',''));
-
-  $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
-  $("#" + id).find('td').eq(3).text('R$ ' +(currentQtd * unitPrice).toFixed(2));
-  updateTotalValue();
-}
-
-function decrease(id) {
-  let oldQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText);
-  let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) - 1;
-  let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ',''));
-
-  if(oldQtd === 1) {
-     let row = document.getElementById(id);
-     row.parentNode.removeChild(row);
-  } else {
-    $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
-    $("#" + id).find('td').eq(3).text('R$ ' + (currentQtd * unitPrice).toFixed(2));
   }
 
-  updateTotalValue();
-}
+  function countItems(attr) {
+    console.log(attr);
+  }
 
-function updateTotalValue() {
-  var totalValue = 0.0;
-  for (let tr of $("#table").find('tr')) {
-      if(tr.rowIndex != 0) {
-          let unitValue = parseFloat($(tr).find('td').eq(1).text().replace('R$ ',''));
-          let quantity = parseInt($(tr).find('td').eq(2).text())
-          totalValue = totalValue + (unitValue * quantity);
+  function increase(id) {
+    let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) + 1;
+    let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ', ''));
+
+    $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
+    $("#" + id).find('td').eq(3).text('R$ ' + (currentQtd * unitPrice).toFixed(2));
+    updateTotalValue();
+  }
+
+  function decrease(id) {
+    let oldQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText);
+    let currentQtd = parseInt($("#" + id).find('td').eq(2)[0].children[1].innerText) - 1;
+    let unitPrice = parseFloat($("#" + id).find('td').eq(1).text().replace('R$ ', ''));
+
+    if (oldQtd === 1) {
+      let row = document.getElementById(id);
+      row.parentNode.removeChild(row);
+    } else {
+      $("#" + id).find('td').eq(2)[0].children[1].innerText = currentQtd;
+      $("#" + id).find('td').eq(3).text('R$ ' + (currentQtd * unitPrice).toFixed(2));
+    }
+
+    updateTotalValue();
+  }
+
+  function updateTotalValue() {
+    var totalValue = 0.0;
+    for (let tr of $("#table").find('tr')) {
+      if (tr.rowIndex != 0) {
+        let unitValue = parseFloat($(tr).find('td').eq(1).text().replace('R$ ', ''));
+        let quantity = parseInt($(tr).find('td').eq(2).text())
+        totalValue = totalValue + (unitValue * quantity);
       }
-  };
-  var valueTotalAntigo = parseFloat($("#valueTotal").text() == '' ? 0.0 : $("#valueTotal").text());
-  $("#valueTotal").val(totalValue + valueTotalAntigo);
-}
+    };
+    var valueTotalAntigo = parseFloat($("#valueTotal").text() == '' ? 0.0 : $("#valueTotal").text());
+    $("#valueTotal").val(totalValue + valueTotalAntigo);
+  }
 
-$("#salvarVenda").click(function() {
-  var products = new Array();
-  var totalValue = 0.0;
-  let unitValue = 0.0;
-  let subTotal = 0.0;
-  let quantity = 0;
-  let productName = '';
-  let paymentType = '';
-  let productId;
-  for (let tr of $("#table").find('tr')) {
-      if(tr.rowIndex != 0) {
-          unitValue = parseFloat($(tr).find('td').eq(1).text().replace('R$ ',''));
-          quantity = parseInt($(tr).find('td').eq(2).text())
-          subTotal = (unitValue * quantity);
-          totalValue = totalValue + subTotal;
-          productName = $(tr).find('td').eq(0).text();
-          paymentType = $("#paymentType").val();
-          productId = $(tr).attr("id");
-          let item = {
-              "subTotal": parseFloat(subTotal),
-              "quantity": quantity,
-              "productId": productId,
-              "productName": productName,
-              "id": null
-          };
-          products.push(item);
+  $("#salvarVenda").click(function () {
+    let products = new Array();
+    let totalValue = 0.0;
+    let unitValue = 0.0;
+    let subTotal = 0.0;
+    let quantity = 0;
+    let productName = '';
+    let paymentType = '';
+    let productId;
+    for (let tr of $("#table").find('tr')) {
+      if (tr.rowIndex != 0) {
+        unitValue = parseFloat($(tr).find('td').eq(1).text().replace('R$ ', ''));
+        quantity = parseInt($(tr).find('td').eq(2).text())
+        subTotal = (unitValue * quantity);
+        totalValue = totalValue + subTotal;
+        productName = $(tr).find('td').eq(0).text();
+        paymentType = $("#paymentType").val();
+        productId = $(tr).attr("id");
+        let item = {
+          "subTotal": parseFloat(subTotal),
+          "quantity": quantity,
+          "productId": productId,
+          "productName": productName,
+          "id": null
+        };
+        products.push(item);
       }
-  };
+    };
 
-  $.ajax({
+    $.ajax({
       method: "POST",
       dataType: "text",
       contentType: "application/json",
-      url : "/sell/save",
+      url: "/sell/save",
       cache: false,
       processData: true,
-      data : JSON.stringify({
-          clientName: $("#clientName").val(),
-          paymentType: paymentType,
-          valueTotal: totalValue,
-          items: products
+      data: JSON.stringify({
+        clientName: $("#clientName").val(),
+        paymentType: paymentType,
+        valueTotal: totalValue,
+        items: products
       }),
-      success : function(result) {
+      success: function (result) {
         alert(result);
+        clearForm();
       },
-      error : function(result) {
+      error: function (result) {
         alert(result.responseText);
+        clearForm();
       }
+    });
+
   });
 
-});
+  function clearForm() {
+    document.getElementById('clientName').value = "";
+    document.getElementById('paymentType').value = "";
+    document.getElementById('valueTotal').value = "";
+    document.getElementById('autocomplete').value = "";
+    $('#table tbody').remove();
+  }
 
 </script>
-</body>
+
 </html>
